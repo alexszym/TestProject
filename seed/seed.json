@@ -1,0 +1,17 @@
+[
+    {
+        "_id": 1,
+        "name": "Lavender heart",
+        "price": "9.25"
+    },
+    {
+        "_id": 2,
+        "name": "Personalised cufflinks",
+        "price": "45.00"
+    },
+    {
+        "_id": 3,
+        "name": "Kids T-shirt",
+        "price": "19.95"
+    }
+]

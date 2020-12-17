@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+
+  mongo-seed:
+    build: ./seed
+    depends_on:
+      - mongodb
+
+  api:
+    build: 
+      context: .
+      dockerfile: ./src/Api/Dockerfile
+    environment: 
+      - DatabaseSettings__ConnectionString=mongodb://mongodb:27017
+    ports:
+      - "5000:80"
+    depends_on:
+      - mongodb
