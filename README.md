@@ -7,7 +7,7 @@ To run the project you need to have Docker running. Use `docker-compose up` to r
 To use navigate to http://localhost:5000/swagger
 
 # Some notes
-Normally I'd include some unit tests with a project, but since the api is very simple integration tests (postman script) seemed more useful.
+Normally I'd include some unit tests with a project, but since the api is very simple the provided integration tests (postman script) a;ready provide a good coverage.
 
 # Some quick feedback on the exercise
 1. The README with the tasks implies that ids are preceded with a '00x' and called product codes, but that's not what the tests are looking for.
