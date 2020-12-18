@@ -18,23 +18,28 @@ namespace Api.Features
 
         public class Handler : IRequestHandler<Command>
         {
-            private readonly IMongoCollection<Product> collection;
+            private readonly IMongoDbContext dbContext;
+            private readonly string collectionName;
 
             public Handler(IMongoDbContext dbContext, IOptions<DatabaseSettingsOptions> options)
             {
-                collection = dbContext.GetCollection<Product>(options.Value.CollectionName);
+                this.dbContext = dbContext;
+                collectionName = options.Value.CollectionName;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var count = await collection.CountDocumentsAsync(x => true);
+                var nextSequence = await dbContext.GetNextSequenceNumber<Product>(collectionName);
                 var product = new Product()
                 {
                     Name = request.Name,
                     Price = request.Price,
-                    Id = count + 1
+                    Id = nextSequence
                 };
+                var collection = dbContext.GetCollection<Product>(collectionName);
                 await collection.InsertOneAsync(product);
+
+                await dbContext.IncrementSequenceNumberAsync<Product>(collectionName);
                 return Unit.Value;
             }
         }
